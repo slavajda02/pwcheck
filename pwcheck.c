@@ -18,6 +18,19 @@ int arg2Check(int arg2) //checks if the second argument is higher then 1
 	}
 	return 0;
 }
+int lengthCheck(char pw[102])
+{
+	int i = 0;
+	while (pw[i] != '\n')
+	{
+		if (i > 100)
+		{
+			return 1;
+		}
+		i++;
+	}
+	return 0;
+}
 int tooLong()
 {
 	fprintf(stderr, "ERROR!\n");
@@ -25,7 +38,7 @@ int tooLong()
 	return 0;
 }
  //Character checking
-int num(char pw[101]) //Checks for at least one numerical character
+int num(char pw[102]) //Checks for at least one numerical character
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -38,7 +51,7 @@ int num(char pw[101]) //Checks for at least one numerical character
 	}
 	return 1;
 }
-int upCase(char pw[101])
+int upCase(char pw[102])
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -51,7 +64,7 @@ int upCase(char pw[101])
 	}
 	return 1;
 }
-int lowCase(char pw[101])
+int lowCase(char pw[102])
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -64,7 +77,7 @@ int lowCase(char pw[101])
 	}
 	return 1;
 }
-int specialChar(char pw[101]) //Checks for at least one special character
+int specialChar(char pw[102]) //Checks for at least one special character
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -78,7 +91,7 @@ int specialChar(char pw[101]) //Checks for at least one special character
 	return 1;
 }
 //Individual levels
-int level1(char pw[101]) //Checks for at least one upper and lower character
+int level1(char pw[102]) //Checks for at least one upper and lower character
 {
 	if (upCase(pw) == 0 && lowCase(pw) == 0)
 	{
@@ -86,7 +99,7 @@ int level1(char pw[101]) //Checks for at least one upper and lower character
 	}
 	return 1;
 }
-int level2(char pw[101], int arg)
+int level2(char pw[102], int arg)
 {
 	if (arg == 1)
 	{
@@ -118,7 +131,7 @@ int level2(char pw[101], int arg)
 	}
 	return 1;
 }
-int level3(char pw[101], int arg)
+int level3(char pw[102], int arg)
 {
 	int repeatedChar = 0;
 	int i = 0;
@@ -148,7 +161,7 @@ int level3(char pw[101], int arg)
 	}
 	return 1;
 }
-int level4(char password[101], int arg2)
+int level4(char password[102], int arg2)
 {
 	int repeated = 0;
 	int i = 0; //pointer i
@@ -172,18 +185,21 @@ int level4(char password[101], int arg2)
 		}
 		else
 		{
-			j++;
 			if (password[j] == '\n')
 			{
 				i++;
 				j = i + 1;
+			}
+			else 
+			{
+				j++;
 			}
 		}
 	}
 	return 0;
 }
 //Statistics
-int getCharCount(char pw[101]) //Outputs character count for current password
+int getCharCount(char pw[102]) //Outputs character count for current password
 {
 	int charCount = 0;
 	while (pw[charCount] != '\n')
@@ -195,10 +211,10 @@ int getCharCount(char pw[101]) //Outputs character count for current password
 //Levels combined
 int checkLevel1() //Checks the passwords at level 2
 {
-	char password[101] = { 0 };
-	while (fgets(password, 101, stdin) != NULL)
+	char password[102] = { 0 };
+	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[101] !=0)
+		if (lengthCheck(password)==1)
 		{
 			return 1;
 		}
@@ -211,10 +227,10 @@ int checkLevel1() //Checks the passwords at level 2
 } 
 int checkLevel2(int arg) //Checks the password for the inclusion of characters from x groups
 {
-	char password[101] = { 0 };
-	while (fgets(password, 101, stdin) != NULL)
+	char password[102] = { 0 };
+	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[101] != 0)
+		if (password[102] != 0)
 		{
 			return 1;
 		}
@@ -227,10 +243,10 @@ int checkLevel2(int arg) //Checks the password for the inclusion of characters f
 }
 int checkLevel3(int arg) //Checks for passwords that don't contain x number of repeated characters
 {
-	char password[101] = { 0 };
-	while (fgets(password, 101, stdin) != NULL)
+	char password[102] = { 0 };
+	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[101] != 0)
+		if (password[102] != 0)
 		{
 			return 1;
 		}
@@ -243,10 +259,10 @@ int checkLevel3(int arg) //Checks for passwords that don't contain x number of r
 }
 int checkLevel4(int arg)
 {
-	char password[101] = { 0 };
-	while (fgets(password, 101, stdin) != NULL)
+	char password[102] = { 0 };
+	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[101] != 0)
+		if (password[102] != 0)
 		{
 			return 1;
 		}
