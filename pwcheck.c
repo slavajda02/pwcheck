@@ -39,10 +39,6 @@ int tooLong() //prints out an error for the password lenght
 }
 int stringCheck(char* str1, char* str2) //Checks if two entered strings match character to character
 {
-	printf("Comparing two strings: \n");
-	printf("%s \n",str1);
-	printf("%s \n",str2);
-	printf("\n");
 	int i = 0;
 	while(str1[i]==str2[i])
 	{
@@ -230,7 +226,7 @@ int level4(char password[102], int arg2)
 }
 
 //Levels combined
-int checkLevel1() //Checks and prints out password that meet the level 1 requirements
+int checkLevel1(int stats) //Checks and prints out password that meet the level 1 requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -246,7 +242,7 @@ int checkLevel1() //Checks and prints out password that meet the level 1 require
 	}
 	return 0;
 } 
-int checkLevel2(int arg) //Checks and prints out password that meet the level 2 and below requirements
+int checkLevel2(int arg, int stats) //Checks and prints out password that meet the level 2 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -262,7 +258,7 @@ int checkLevel2(int arg) //Checks and prints out password that meet the level 2 
 	}
 	return 0;
 }
-int checkLevel3(int arg) //Checks and prints out password that meet the level 3 and below requirements
+int checkLevel3(int arg, int stats) //Checks and prints out password that meet the level 3 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -278,7 +274,7 @@ int checkLevel3(int arg) //Checks and prints out password that meet the level 3 
 	}
 	return 0;
 }
-int checkLevel4(int arg) //Checks and prints out password that meet the level 4 and below requirements
+int checkLevel4(int arg, int stats) //Checks and prints out password that meet the level 4 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -341,7 +337,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 1) //calls level1 function
 	{
-		if (checkLevel1() == 1) //checks for function error return
+		if (checkLevel1(stats) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -350,7 +346,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 2) //calls level 2 function
 	{
-		if (checkLevel2(arg2) == 1) //checks for function error return
+		if (checkLevel2(arg2, stats) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -358,7 +354,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 3) //calls level 3 function
 	{
-		if (checkLevel3(arg2) == 1) //checks for function error return
+		if (checkLevel3(arg2,stats) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -366,7 +362,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 4) //calls level 4 function
 	{
-		if (checkLevel4(arg2) == 1) //checks for function error return
+		if (checkLevel4(arg2,stats) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
