@@ -239,7 +239,7 @@ int checkLevel1(int stats) //Checks and prints out password that meet the level 
 		}
 		if (level1(password) == 0)
 		{
-			printf("%s", password);
+			printf("%s",password);
 		}
 	}
 	return 0;
@@ -344,7 +344,6 @@ int main(int argc, char** argv)
 			tooLong();
 			return 1;
 		}
-		return 0;
 	}
 	if (arg1 == 2) //calls level 2 function
 	{
@@ -369,6 +368,23 @@ int main(int argc, char** argv)
 			tooLong();
 			return 1;
 		}
+	}
+	//Statistics
+	if(stats == 1)
+	{
+		rewind(stdin);
+		float length = 0;
+		float pwCount = 0;
+		float avgLength = 0;
+		char password[102];
+		while(fgets(password,102,stdin)!=NULL)
+		{
+			length = length + getCharCount(password);
+			pwCount ++;
+		}
+		avgLength = length/pwCount;
+		printf("Statistika:\n");
+		printf("Prumerna delka: %.2f \n",avgLength);
 	}
 	return 0;
 }
