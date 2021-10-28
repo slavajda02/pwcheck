@@ -323,7 +323,7 @@ int main(int argc, char** argv)
 		fprintf(stderr,"The second argument must be bigger than 1 \n");
 		return 1;
 	}
-	if (argc == 4) //checks if the third argument have been entered
+	if (argc == 4) //checks if the third argument has been entered
 	{
 		char* correct = "--stats";
 		if (stringCheck(argv[3], correct) == 0)
