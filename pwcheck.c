@@ -37,6 +37,23 @@ int tooLong() //prints out an error for the password lenght
 	fprintf(stderr, "Entered password is over 100 characters long!\n");
 	return 0;
 }
+int stringCheck(char* str1, char* str2) //Checks if two entered strings match character to character
+{
+	printf("Comparing two strings: \n");
+	printf("%s \n",str1);
+	printf("%s \n",str2);
+	printf("\n");
+	int i = 0;
+	while(str1[i]==str2[i])
+	{
+		if(str1[i] == '\0' && str2[i] == '\0')
+		{
+			return 0;
+		}	
+		i++;
+	}
+	return 1;
+}
 
  //Character checking
 int num(char pw[102]) //Checks for at least one numerical character
@@ -280,6 +297,7 @@ int checkLevel4(int arg) //Checks and prints out password that meet the level 4 
 
 int main(int argc, char** argv)
 {
+	int stats = 0;
 	if (argc == 1) // Prevents running with no arguments
 	{
 		fprintf(stderr,"ERROR!\n");
@@ -306,6 +324,20 @@ int main(int argc, char** argv)
 		fprintf(stderr,"ERROR!\n");
 		fprintf(stderr,"The second argument must be bigger than 1 \n");
 		return 1;
+	}
+	if (argc == 4)
+	{
+		char* correct = "--stats";
+		if (stringCheck(argv[3], correct) == 0)
+		{
+			stats = 1;
+		}
+		else
+		{
+			fprintf(stderr,"ERROR!\n");
+			fprintf(stderr,"Stats argument has been wrongly entered use --stats\n");
+			return 1;
+		}
 	}
 	if (arg1 == 1) //calls level1 function
 	{
