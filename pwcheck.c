@@ -117,6 +117,7 @@ int getCharCount(char pw[102]) //Outputs character count for current password
 }
 
 //Individual levels
+//These funcitons check a single password accoring to the individual levels
 int level1(char pw[102]) //Checks a password at level1
 {
 	if (upCase(pw) == 0 && lowCase(pw) == 0)
@@ -141,7 +142,7 @@ int level2(char pw[102], int arg) //Checks a password at level2
 			return 0;
 		}
 	}
-	if (arg == 3)
+	if (arg == 3) 
 	{
 		if (upCase(pw) == 0 && lowCase(pw) == 0 && num(pw) == 0)
 		{
@@ -226,6 +227,7 @@ int level4(char password[102], int arg2)
 }
 
 //Levels combined
+//These funcitons feed one password by another to the individual levels
 int checkLevel1(int stats) //Checks and prints out password that meet the level 1 requirements
 {
 	char password[102] = { 0 };
@@ -321,7 +323,7 @@ int main(int argc, char** argv)
 		fprintf(stderr,"The second argument must be bigger than 1 \n");
 		return 1;
 	}
-	if (argc == 4)
+	if (argc == 4) //checks if the third argument have been entered
 	{
 		char* correct = "--stats";
 		if (stringCheck(argv[3], correct) == 0)
