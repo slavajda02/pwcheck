@@ -92,6 +92,17 @@ int specialChar(char pw[102]) //Checks for at least one special character
 	return 1;
 }
 
+//Statistics
+int getCharCount(char pw[102]) //Outputs character count for current password
+{
+	int charCount = 0;
+	while (pw[charCount] != '\n')
+	{
+		charCount++;
+	}
+	return charCount;
+}
+
 //Individual levels
 int level1(char pw[102]) //Checks a password at level1
 {
@@ -200,16 +211,7 @@ int level4(char password[102], int arg2)
 	}
 	return 0;
 }
-//Statistics
-int getCharCount(char pw[102]) //Outputs character count for current password
-{
-	int charCount = 0;
-	while (pw[charCount] != '\n')
-	{
-		charCount++;
-	}
-	return charCount;
-}
+
 //Levels combined
 int checkLevel1() //Checks and prints out password that meet the level 1 requirements
 {
