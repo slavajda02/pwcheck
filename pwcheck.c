@@ -18,7 +18,7 @@ int arg2Check(int arg2) //checks if the second argument is higher then 1
 	}
 	return 0;
 }
-int lengthCheck(char pw[102])
+int lengthCheck(char pw[102]) //checks if the password is not longer than 100 characters
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -31,12 +31,13 @@ int lengthCheck(char pw[102])
 	}
 	return 0;
 }
-int tooLong()
+int tooLong() //prints out an error for the password lenght
 {
 	fprintf(stderr, "ERROR!\n");
 	fprintf(stderr, "Entered password is over 100 characters long!\n");
 	return 0;
 }
+
  //Character checking
 int num(char pw[102]) //Checks for at least one numerical character
 {
@@ -51,7 +52,7 @@ int num(char pw[102]) //Checks for at least one numerical character
 	}
 	return 1;
 }
-int upCase(char pw[102])
+int upCase(char pw[102]) //Checks for at least one upper case character
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -64,7 +65,7 @@ int upCase(char pw[102])
 	}
 	return 1;
 }
-int lowCase(char pw[102])
+int lowCase(char pw[102]) //Checks for at least one lower case character
 {
 	int i = 0;
 	while (pw[i] != '\n')
@@ -90,8 +91,9 @@ int specialChar(char pw[102]) //Checks for at least one special character
 	}
 	return 1;
 }
+
 //Individual levels
-int level1(char pw[102]) //Checks for at least one upper and lower character
+int level1(char pw[102]) //Checks a password at level1
 {
 	if (upCase(pw) == 0 && lowCase(pw) == 0)
 	{
@@ -99,7 +101,7 @@ int level1(char pw[102]) //Checks for at least one upper and lower character
 	}
 	return 1;
 }
-int level2(char pw[102], int arg)
+int level2(char pw[102], int arg) //Checks a password at level2
 {
 	if (arg == 1)
 	{
@@ -131,7 +133,7 @@ int level2(char pw[102], int arg)
 	}
 	return 1;
 }
-int level3(char pw[102], int arg)
+int level3(char pw[102], int arg) //Checks a password at level3
 {
 	int repeatedChar = 0;
 	int i = 0;
@@ -142,20 +144,20 @@ int level3(char pw[102], int arg)
 		{
 			if (pw[i] == pw[i - 1]) //checks for a repeated character
 			{
-				timesRepeated++;
+				timesRepeated++; //counts the times the charater has been repeated
 			}
 			else
 			{
-				timesRepeated = 0;
+				timesRepeated = 0; //if the character stops repeating nulls the counter and breaks the loop
 			}
 		}
-		if ((timesRepeated + 1) >= arg)
+		if ((timesRepeated + 1) >= arg) //string gets marked as a non valid one if the timesRepeated matches the second argument
 		{
-			repeatedChar = 1; //marks the password as non valid one
+			repeatedChar = 1; 
 		}
 		i++;
 	}
-	if (repeatedChar == 0)
+	if (repeatedChar == 0) //returns zero if the string is a valid one
 	{
 		return 0;
 	}
@@ -230,7 +232,7 @@ int checkLevel2(int arg) //Checks the password for the inclusion of characters f
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[102] != 0)
+		if (lengthCheck(password)==1)
 		{
 			return 1;
 		}
@@ -246,7 +248,7 @@ int checkLevel3(int arg) //Checks for passwords that don't contain x number of r
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[102] != 0)
+		if (lengthCheck(password)==1)
 		{
 			return 1;
 		}
@@ -262,7 +264,7 @@ int checkLevel4(int arg)
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
 	{
-		if (password[102] != 0)
+		if (lengthCheck(password)==1)
 		{
 			return 1;
 		}
