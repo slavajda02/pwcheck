@@ -120,7 +120,7 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for zeros and
 	int diffCharacter = 0;
 	for(int i = 0; i !=127; i++)
 	{
-		if(asciCapture[i] == 0)
+		if(asciCapture[i] == 1)
 		{
 			diffCharacter ++;
 		}
@@ -240,7 +240,7 @@ int level4(char password[102], int arg2)
 
 //Levels combined
 //These funcitons feed one password by another to the individual levels
-int checkLevel1(int stats) //Checks and prints out password that meet the level 1 requirements
+int checkLevel1() //Checks and prints out password that meet the level 1 requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -256,7 +256,7 @@ int checkLevel1(int stats) //Checks and prints out password that meet the level 
 	}
 	return 0;
 } 
-int checkLevel2(int arg, int stats) //Checks and prints out password that meet the level 2 and below requirements
+int checkLevel2(int arg) //Checks and prints out password that meet the level 2 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -272,7 +272,7 @@ int checkLevel2(int arg, int stats) //Checks and prints out password that meet t
 	}
 	return 0;
 }
-int checkLevel3(int arg, int stats) //Checks and prints out password that meet the level 3 and below requirements
+int checkLevel3(int arg) //Checks and prints out password that meet the level 3 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -288,7 +288,7 @@ int checkLevel3(int arg, int stats) //Checks and prints out password that meet t
 	}
 	return 0;
 }
-int checkLevel4(int arg, int stats) //Checks and prints out password that meet the level 4 and below requirements
+int checkLevel4(int arg) //Checks and prints out password that meet the level 4 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -351,7 +351,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 1) //calls level1 function
 	{
-		if (checkLevel1(stats) == 1) //checks for function error return
+		if (checkLevel1() == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -359,7 +359,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 2) //calls level 2 function
 	{
-		if (checkLevel2(arg2, stats) == 1) //checks for function error return
+		if (checkLevel2(arg2) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -367,7 +367,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 3) //calls level 3 function
 	{
-		if (checkLevel3(arg2,stats) == 1) //checks for function error return
+		if (checkLevel3(arg2) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -375,7 +375,7 @@ int main(int argc, char** argv)
 	}
 	if (arg1 == 4) //calls level 4 function
 	{
-		if (checkLevel4(arg2,stats) == 1) //checks for function error return
+		if (checkLevel4(arg2) == 1) //checks for function error return
 		{
 			tooLong();
 			return 1;
@@ -389,7 +389,7 @@ int main(int argc, char** argv)
 		float pwCount = 0;
 		float avgLength = 0;
 		int minLength = 100;
-		int asciCapture[127] = { 1 };
+		int asciCapture[127] = { 0 };
 		int carry = 0; 
 		int diffChar = 0;
 		char password[102];
@@ -398,7 +398,7 @@ int main(int argc, char** argv)
 			for(int i=0 ; password[i] != '\n' ; i++)
 			{
 				carry = password[i];
-				asciCapture[carry] = 0;
+				asciCapture[carry] = 1;
 			}
 			length = length + getCharCount(password);
 			if(getCharCount(password)<minLength)
