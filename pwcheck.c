@@ -211,7 +211,7 @@ int getCharCount(char pw[102]) //Outputs character count for current password
 	return charCount;
 }
 //Levels combined
-int checkLevel1() //Checks the passwords at level 2
+int checkLevel1() //Checks and prints out password that meet the level 1 requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -227,7 +227,7 @@ int checkLevel1() //Checks the passwords at level 2
 	}
 	return 0;
 } 
-int checkLevel2(int arg) //Checks the password for the inclusion of characters from x groups
+int checkLevel2(int arg) //Checks and prints out password that meet the level 2 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -243,7 +243,7 @@ int checkLevel2(int arg) //Checks the password for the inclusion of characters f
 	}
 	return 0;
 }
-int checkLevel3(int arg) //Checks for passwords that don't contain x number of repeated characters
+int checkLevel3(int arg) //Checks and prints out password that meet the level 3 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -259,7 +259,7 @@ int checkLevel3(int arg) //Checks for passwords that don't contain x number of r
 	}
 	return 0;
 }
-int checkLevel4(int arg)
+int checkLevel4(int arg) //Checks and prints out password that meet the level 4 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
