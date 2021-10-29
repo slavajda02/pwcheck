@@ -271,75 +271,9 @@ int level4(char password[102], int arg2) //Checks a password at level4 (it looks
 	return 0; //if the repeated == args2 hasn't been trigered return 0 and mark the password as a valid one
 }
 
-//Levels combined
-//These funcitons feed one password by another to the individual levels
-int checkLevel1() //Checks and prints out passwords that meet the level 1 requirements
-{
-	char password[102] = { 0 };
-	while (fgets(password, 102, stdin) != NULL)
-	{
-		if (lengthCheck(password)==1)
-		{
-			return 1;
-		}
-		if (level1(password) == 0)
-		{
-			printf("%s",password);
-		}
-	}
-	return 0;
-} 
-int checkLevel2(int arg) //Checks and prints out passwords that meet the level 2 and below requirements
-{
-	char password[102] = { 0 };
-	while (fgets(password, 102, stdin) != NULL)
-	{
-		if (lengthCheck(password)==1)
-		{
-			return 1;
-		}
-		if (level1(password) == 0 &&level2(password, arg) == 0)
-		{
-			printf("%s", password);
-		}
-	}
-	return 0;
-}
-int checkLevel3(int arg) //Checks and prints out passwords that meet the level 3 and below requirements
-{
-	char password[102] = { 0 };
-	while (fgets(password, 102, stdin) != NULL)
-	{
-		if (lengthCheck(password)==1)
-		{
-			return 1;
-		}
-		if (level1(password) == 0 && level2(password, arg) == 0 && level3(password, arg) == 0)
-		{
-			printf("%s", password);
-		}
-	}
-	return 0;
-}
-int checkLevel4(int arg) //Checks and prints out passwords that meet the level 4 and below requirements
-{
-	char password[102] = { 0 };
-	while (fgets(password, 102, stdin) != NULL)
-	{
-		if (lengthCheck(password)==1)
-		{
-			return 1;
-		}
-		if (level1(password) == 0 && level2(password, arg) == 0 && level3(password, arg) == 0 && level4(password, arg) == 0)
-		{
-			printf("%s", password);
-		}
-	}
-	return 0;
-}
-
 int main(int argc, char** argv)
 {
+	char password[102];
 	int stats = 0;
 	if (argc == 1) // Prevents running with no arguments
 	{
@@ -382,36 +316,40 @@ int main(int argc, char** argv)
 			return 1;
 		}
 	}
-	if (arg1 == 1) //calls level1 function
+	while (fgets(password,102,stdin) != NULL)
 	{
-		if (checkLevel1() == 1) //checks for function error return
+		if (lengthCheck(password)==1)
 		{
 			tooLong();
 			return 1;
 		}
-	}
-	if (arg1 == 2) //calls level 2 function
-	{
-		if (checkLevel2(arg2) == 1) //checks for function error return
+		if (arg1 == 1) //Checks at level1
 		{
-			tooLong();
-			return 1;
+			if (level1(password) == 0)
+			{
+				printf("%s",password);
+			}
 		}
-	}
-	if (arg1 == 3) //calls level 3 function
-	{
-		if (checkLevel3(arg2) == 1) //checks for function error return
+		if (arg1 == 2) //Cheks at level2
 		{
-			tooLong();
-			return 1;
+			if (level1(password) == 0 &&level2(password, arg2) == 0)
+			{
+				printf("%s", password);
+			}
 		}
-	}
-	if (arg1 == 4) //calls level 4 function
-	{
-		if (checkLevel4(arg2) == 1) //checks for function error return
+		if (arg1 == 3) //Checks at level3
 		{
-			tooLong();
-			return 1;
+			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0)
+			{
+				printf("%s", password);
+			}
+		}
+		if (arg1 == 4) //Checks at level4
+		{
+			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0 && level4(password, arg2) == 0)
+			{
+				printf("%s", password);
+			}
 		}
 	}
 	//Statistics
