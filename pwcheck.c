@@ -2,19 +2,33 @@
 #include<stdlib.h>
 
 //Error prevention
-int argCheck(int arg1) //Checks for wrongly entered arguments
+int arg1Check(char* arg1) //Checks the first arguments for correct values
 {
-	if (arg1>4 || arg1<1) //First parameter should be from 1 to 4
+	for(int i = 0 ; arg1[i] != '\0' ; i++)
 	{
-		return 1;
+		if(arg1[i] <'1' || arg1[i] > '4')
+		{
+			return 1;
+		}
+		if(i == 1)
+		{
+			return 1;
+		}
 	}
 	return 0;
 }
-int arg2Check(int arg2) //checks if the second argument is higher then 1
+int arg2Check(char* arg2) //Checks the second argument for correct values
 {
-	if (arg2 < 1)
+	if(arg2[0] <'1' || arg2[0] > '9')
 	{
 		return 1;
+	}
+	for(int i = 0 ; arg2[i] ; i++)
+	{
+		if(arg2[i] <'0' || arg2[i] > '9')
+		{
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -242,7 +256,7 @@ int main(int argc, char** argv)
 {
 	char password[102];
 	//Variables for stats
-	int stats = 0;
+	int stats = 0; //flag for stats
 	float length = 0;
 	float pwCount = 0;
 	float avgLength = 0;
@@ -259,38 +273,39 @@ int main(int argc, char** argv)
 	if (argc < 3 || argc > 4) //Checks for the number of arguments entered
 	{
 		fprintf(stderr, "ERROR! \n");
-		fprintf(stderr, "Enter two arguments! \n");
+		fprintf(stderr, "Only two arguments and --stats is allowed \n");
 		return 1;
 	}
-	int arg1 = atoi(argv[1]); //Conversion of the first arguments to int
-	if (argCheck(arg1) == 1) //Checks for invalid argument values
+	if (arg1Check(argv[1]) == 1) //Checks for invalid argument values
 	{
 		fprintf(stderr,"ERROR! \n");
 		fprintf(stderr,"The first argument has a bad value! \n");
 		fprintf(stderr,"The first argument should have a value from 1 to 4 \n");
 		return 1;
 	}
-	int arg2 = atoi(argv[2]); //Conversion of the second argument to int
-	if (arg2Check(arg2) == 1)
+	if (arg2Check(argv[2]) == 1)
 	{
 		fprintf(stderr,"ERROR!\n");
-		fprintf(stderr,"The second argument must be bigger than 1 \n");
+		fprintf(stderr,"The second argument must be bigger than 1 and must contain only numerical values \n");
 		return 1;
 	}
-	if (argc == 4) //checks if the third argument has been entered
+	if (argc == 4) //checks if the third argument has been entered and checks for its correctness
 	{
-		char* correct = "--stats";
-		if (stringCheck(argv[3], correct) == 0)
+		char* correct = "--stats"; //defines the correct string
+		if (stringCheck(argv[3], correct) == 0) //calls the comparing function
 		{
-			stats = 1;
+			stats = 1; //sets stats flag to one
 		}
 		else
 		{
+			//error message
 			fprintf(stderr,"ERROR!\n");
 			fprintf(stderr,"Stats argument has been wrongly entered use --stats\n");
 			return 1;
 		}
 	}
+	int arg1 = atoi(argv[1]); //Conversion of the first arguments to int
+	int arg2 = atoi(argv[2]); //Conversion of the second argument to int
 	while (fgets(password,102,stdin) != NULL)
 	{
 		if (lengthCheck(password)==1)
@@ -344,6 +359,7 @@ int main(int argc, char** argv)
 	{
 		diffChar = getDifferentChar(asciCapture); //calls the getDifferentCharacter function that scans the array for ones and outputs their count
 		avgLength = length/pwCount; //calculates the average lenght of the passwords
+		//prints out all of the stats
 		printf("Statistika:\n");
 		printf("Ruznych znaku: %d \n",diffChar);
 		printf("Minimalni delka: %d \n",minLength);
