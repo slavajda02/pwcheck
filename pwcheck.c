@@ -127,6 +127,39 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for zeros and
 	}
 	return diffCharacter;
 }
+int printStats()
+{
+	rewind(stdin);
+		float length = 0;
+		float pwCount = 0;
+		float avgLength = 0;
+		int minLength = 100;
+		int asciCapture[127] = { 0 };
+		int carry = 0; 
+		int diffChar = 0;
+		char password[102];
+		while(fgets(password,102,stdin)!=NULL)
+		{
+			for(int i=0 ; password[i] != '\n' ; i++)
+			{
+				carry = password[i];
+				asciCapture[carry] = 1;
+			}
+			length = length + getCharCount(password);
+			if(getCharCount(password)<minLength)
+			{
+				minLength = getCharCount(password);
+			}
+			pwCount ++;
+		}
+		diffChar = getDifferentChar(asciCapture);
+		avgLength = length/pwCount;
+		printf("Statistika:\n");
+		printf("Ruznych znaku: %d \n",diffChar);
+		printf("Minimalni delka: %d \n",minLength);
+		printf("Prumerna delka: %.2f \n",avgLength);
+		return 0;
+}
 
 //Individual levels
 //These funcitons check a single password accoring to the individual levels
@@ -384,35 +417,7 @@ int main(int argc, char** argv)
 	//Statistics
 	if(stats == 1)
 	{
-		rewind(stdin);
-		float length = 0;
-		float pwCount = 0;
-		float avgLength = 0;
-		int minLength = 100;
-		int asciCapture[127] = { 0 };
-		int carry = 0; 
-		int diffChar = 0;
-		char password[102];
-		while(fgets(password,102,stdin)!=NULL)
-		{
-			for(int i=0 ; password[i] != '\n' ; i++)
-			{
-				carry = password[i];
-				asciCapture[carry] = 1;
-			}
-			length = length + getCharCount(password);
-			if(getCharCount(password)<minLength)
-			{
-				minLength = getCharCount(password);
-			}
-			pwCount ++;
-		}
-		diffChar = getDifferentChar(asciCapture);
-		avgLength = length/pwCount;
-		printf("Statistika:\n");
-		printf("Ruznych znaku: %d \n",diffChar);
-		printf("Minimalni delka: %d \n",minLength);
-		printf("Prumerna delka: %.2f \n",avgLength);
+		printStats();
 	}
 	return 0;
 }
