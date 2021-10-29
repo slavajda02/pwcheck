@@ -21,9 +21,9 @@ int arg2Check(int arg2) //checks if the second argument is higher then 1
 int lengthCheck(char pw[102]) //checks if the password is not longer than 100 characters
 {
 	int i = 0;
-	while (pw[i] != '\n')
+	while (pw[i] != '\n') //finding the '\n' character, the character won't be included in the array if there is more than 100 chars
 	{
-		if (i > 100)
+		if (i > 100) //if the array pointer is about to overflow return 1
 		{
 			return 1;
 		}
@@ -106,7 +106,7 @@ int specialChar(char pw[102]) //Checks for at least one special character
 }
 
 //Statistics
-int getCharCount(char pw[102]) //Outputs character count for current password
+int getCharCount(char pw[102]) //Returns a character count for a given array
 {
 	int charCount = 0;
 	while (pw[charCount] != '\n')
@@ -115,10 +115,10 @@ int getCharCount(char pw[102]) //Outputs character count for current password
 	}
 	return charCount;
 }
-int getDifferentChar(int asciCapture[127]) //Scans the given array for zeros and outputs the number of zeros in the array
+int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and returns the number of ones in the array
 {
 	int diffCharacter = 0;
-	for(int i = 0; i !=127; i++)
+	for(int i = 0; i !=127; i++) // 127 is the size of an asci table
 	{
 		if(asciCapture[i] == 1)
 		{
@@ -127,33 +127,33 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for zeros and
 	}
 	return diffCharacter;
 }
-int printStats()
+int printStats() //Function for calculating and printing out statistics
 {
 	rewind(stdin);
 		float length = 0;
 		float pwCount = 0;
 		float avgLength = 0;
-		int minLength = 100;
-		int asciCapture[127] = { 0 };
+		int minLength = 100; //sets the minimum length value to the maximum size of a password which is 100 characters long
+		int asciCapture[127] = { 0 }; //Creates an array with a same size as an asci table and fills it with zeros
 		int carry = 0; 
 		int diffChar = 0;
 		char password[102];
 		while(fgets(password,102,stdin)!=NULL)
 		{
-			for(int i=0 ; password[i] != '\n' ; i++)
+			for(int i=0 ; password[i] != '\n' ; i++) //Scans every single character
 			{
-				carry = password[i];
-				asciCapture[carry] = 1;
+				carry = password[i]; //gets the character asci code and saves it into carry
+				asciCapture[carry] = 1; //uses the character asci code as an array pointer and sets that arrays vallue to one
 			}
-			length = length + getCharCount(password);
-			if(getCharCount(password)<minLength)
+			length = length + getCharCount(password); //counts up the lenght of all the passwords
+			if(getCharCount(password)<minLength) //if the current password lenght is smaller than previus minimum lenght it sets the miLenght value to the lenght of the current password
 			{
 				minLength = getCharCount(password);
 			}
 			pwCount ++;
 		}
-		diffChar = getDifferentChar(asciCapture);
-		avgLength = length/pwCount;
+		diffChar = getDifferentChar(asciCapture); //calls the getDifferentCharacter function that scans the array for ones and outputs their count
+		avgLength = length/pwCount; //calculates the average lenght of the passwords
 		printf("Statistika:\n");
 		printf("Ruznych znaku: %d \n",diffChar);
 		printf("Minimalni delka: %d \n",minLength);
@@ -171,7 +171,7 @@ int level1(char pw[102]) //Checks a password at level1
 	}
 	return 1;
 }
-int level2(char pw[102], int arg) //Checks a password at level2
+int level2(char pw[102], int arg) //Checks a password at level2 (calls different functions according to the entered argument)
 {
 	if (arg == 1)
 	{
@@ -203,7 +203,7 @@ int level2(char pw[102], int arg) //Checks a password at level2
 	}
 	return 1;
 }
-int level3(char pw[102], int arg) //Checks a password at level3
+int level3(char pw[102], int arg) //Checks a password at level3 (checks for x number of reccuring characters)
 {
 	int repeatedChar = 0;
 	int i = 0;
@@ -233,47 +233,47 @@ int level3(char pw[102], int arg) //Checks a password at level3
 	}
 	return 1;
 }
-int level4(char password[102], int arg2)
+int level4(char password[102], int arg2) //Checks a password at level4 (it looks for a repeated substring int the password)
 {
 	int repeated = 0;
-	int i = 0; //pointer i
+	int i = 0; //pointer i 
 	int j = 1; //pointer j
 	while (password[i + 1] != '\n')
 	{
-		if (password[i] == password[j])
+		if (password[i] == password[j]) //it the characters match
 		{
-			int carryi = i;
-			while (password[carryi] == password[j])
+			int carryi = i; //test the carryi value to the current i value
+			while (password[carryi] == password[j]) //if the characters on different pointers keep matching move both pointers
 			{
-				repeated++;
+				repeated++; //records the number of repeated characters in the substring
 				j++;
 				carryi++;
-				if (repeated == arg2)
+				if (repeated == arg2) //if the number of repeated characters matches the string return 1 which marks the password as a non valid one
 				{
 					return 1;
 				}
 			}
-			repeated = 0;
+			repeated = 0; //when the characters on the pointers stop matching and the function wasn't returned, null the repeated counter
 		}
-		else
+		else //if the chracters on the pointers don't match
 		{
-			if (password[j] == '\n')
+			if (password[j] == '\n') //if the j pointer has reached the end of the string
 			{
-				i++;
-				j = i + 1;
+				i++; //move the i pointer by one
+				j = i + 1; //move the j pointer to the i pointer location +1
 			}
 			else 
 			{
-				j++;
+				j++; //move the j pointer by one
 			}
 		}
 	}
-	return 0;
+	return 0; //if the repeated == args2 hasn't been trigered return 0 and mark the password as a valid one
 }
 
 //Levels combined
 //These funcitons feed one password by another to the individual levels
-int checkLevel1() //Checks and prints out password that meet the level 1 requirements
+int checkLevel1() //Checks and prints out passwords that meet the level 1 requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -289,7 +289,7 @@ int checkLevel1() //Checks and prints out password that meet the level 1 require
 	}
 	return 0;
 } 
-int checkLevel2(int arg) //Checks and prints out password that meet the level 2 and below requirements
+int checkLevel2(int arg) //Checks and prints out passwords that meet the level 2 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -305,7 +305,7 @@ int checkLevel2(int arg) //Checks and prints out password that meet the level 2 
 	}
 	return 0;
 }
-int checkLevel3(int arg) //Checks and prints out password that meet the level 3 and below requirements
+int checkLevel3(int arg) //Checks and prints out passwords that meet the level 3 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
@@ -321,7 +321,7 @@ int checkLevel3(int arg) //Checks and prints out password that meet the level 3 
 	}
 	return 0;
 }
-int checkLevel4(int arg) //Checks and prints out password that meet the level 4 and below requirements
+int checkLevel4(int arg) //Checks and prints out passwords that meet the level 4 and below requirements
 {
 	char password[102] = { 0 };
 	while (fgets(password, 102, stdin) != NULL)
