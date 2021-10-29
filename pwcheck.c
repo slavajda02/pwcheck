@@ -361,9 +361,9 @@ int main(int argc, char** argv)
 		avgLength = length/pwCount; //calculates the average lenght of the passwords
 		//prints out all of the stats
 		printf("Statistika:\n");
-		printf("Ruznych znaku: %d \n",diffChar);
-		printf("Minimalni delka: %d \n",minLength);
-		printf("Prumerna delka: %.2f \n",avgLength);
+		printf("Ruznych znaku: %d\n",diffChar);
+		printf("Minimalni delka: %d\n",minLength);
+		printf("Prumerna delka: %.1f\n",avgLength);
 	}
 	return 0;
 }
