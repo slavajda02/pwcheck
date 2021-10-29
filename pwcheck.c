@@ -127,39 +127,6 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and 
 	}
 	return diffCharacter;
 }
-int printStats() //Function for calculating and printing out statistics
-{
-	rewind(stdin);
-		float length = 0;
-		float pwCount = 0;
-		float avgLength = 0;
-		int minLength = 100; //sets the minimum length value to the maximum size of a password which is 100 characters long
-		int asciCapture[127] = { 0 }; //Creates an array with a same size as an asci table and fills it with zeros
-		int carry = 0; 
-		int diffChar = 0;
-		char password[102];
-		while(fgets(password,102,stdin)!=NULL)
-		{
-			for(int i=0 ; password[i] != '\n' ; i++) //Scans every single character
-			{
-				carry = password[i]; //gets the character asci code and saves it into carry
-				asciCapture[carry] = 1; //uses the character asci code as an array pointer and sets that arrays vallue to one
-			}
-			length = length + getCharCount(password); //counts up the lenght of all the passwords
-			if(getCharCount(password)<minLength) //if the current password lenght is smaller than previus minimum lenght it sets the miLenght value to the lenght of the current password
-			{
-				minLength = getCharCount(password);
-			}
-			pwCount ++;
-		}
-		diffChar = getDifferentChar(asciCapture); //calls the getDifferentCharacter function that scans the array for ones and outputs their count
-		avgLength = length/pwCount; //calculates the average lenght of the passwords
-		printf("Statistika:\n");
-		printf("Ruznych znaku: %d \n",diffChar);
-		printf("Minimalni delka: %d \n",minLength);
-		printf("Prumerna delka: %.2f \n",avgLength);
-		return 0;
-}
 
 //Individual levels
 //These funcitons check a single password accoring to the individual levels
@@ -274,7 +241,15 @@ int level4(char password[102], int arg2) //Checks a password at level4 (it looks
 int main(int argc, char** argv)
 {
 	char password[102];
+	//Variables for stats
 	int stats = 0;
+	float length = 0;
+	float pwCount = 0;
+	float avgLength = 0;
+	int minLength = 100; //sets the minimum length value to the maximum size of a password which is 100 characters long
+	int asciCapture[127] = { 0 }; //Creates an array with a same size as an asci table and fills it with zeros
+	int carry = 0; 
+	int diffChar = 0;
 	if (argc == 1) // Prevents running with no arguments
 	{
 		fprintf(stderr,"ERROR!\n");
@@ -351,11 +326,28 @@ int main(int argc, char** argv)
 				printf("%s", password);
 			}
 		}
+		//stats function
+		for(int i=0 ; password[i] != '\n' ; i++) //Scans every single character
+			{
+				carry = password[i]; //gets the character asci code and saves it into carry
+				asciCapture[carry] = 1; //uses the character asci code as an array pointer and sets that arrays vallue to one
+			}
+		length = length + getCharCount(password); //counts up the lenght of all the passwords
+		if(getCharCount(password)<minLength) //if the current password lenght is smaller than previus minimum lenght it sets the miLenght value to the lenght of the current password
+		{
+			minLength = getCharCount(password);
+		}
+		pwCount ++;
 	}
 	//Statistics
 	if(stats == 1)
 	{
-		printStats();
+		diffChar = getDifferentChar(asciCapture); //calls the getDifferentCharacter function that scans the array for ones and outputs their count
+		avgLength = length/pwCount; //calculates the average lenght of the passwords
+		printf("Statistika:\n");
+		printf("Ruznych znaku: %d \n",diffChar);
+		printf("Minimalni delka: %d \n",minLength);
+		printf("Prumerna delka: %.2f \n",avgLength);
 	}
 	return 0;
 }
