@@ -348,14 +348,14 @@ int main(int argc, char** argv)
 		}
 		if (arg1 == 3) //Checks at level3
 		{
-			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0)
+			if (level1(password) == 0 && level2(password, 4) == 0 && level3(password, arg2) == 0)
 			{
 				printf("%s", password);
 			}
 		}
 		if (arg1 == 4) //Checks at level4
 		{
-			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0 && level4(password, arg2) == 0)
+			if (level1(password) == 0 && level2(password, 4) == 0 && level3(password, 4) == 0 && level4(password, arg2) == 0)
 			{
 				printf("%s", password);
 			}
