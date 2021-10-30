@@ -84,11 +84,11 @@ int num(char pw[102]) //Checks for at least one numerical character
 	{
 		if (pw[i] >= '0' && pw[i] <= '9')
 		{
-			return 0;
+			return 1;
 		}
 		i++;
 	}
-	return 1;
+	return 0;
 }
 int upCase(char pw[102]) //Checks for at least one upper case character
 {
@@ -97,37 +97,37 @@ int upCase(char pw[102]) //Checks for at least one upper case character
 	{
 		if (pw[i] >= 'A' && pw[i] <= 'Z')
 		{
-			return 0;
+			return 1;
 		}
 		i++;
 	}
-	return 1;
+	return 0;
 }
 int lowCase(char pw[102]) //Checks for at least one lower case character
 {
-	int i = 0;
+	int i = 1;
 	while (pw[i] != '\n')
 	{
 		if (pw[i] >= 'a' && pw[i] <= 'z')
 		{
-			return 0;
+			return 1;
 		}
 		i++;
 	}
-	return 1;
+	return 0;
 }
 int specialChar(char pw[102]) //Checks for at least one special character
 {
-	int i = 0;
+	int i = 1;
 	while (pw[i] != '\n')
 	{
 		if (pw[i] >= 32 && pw[i] <= 126)
 		{
-			return 0;
+			return 1;
 		}
 		i++;
 	}
-	return 1;
+	return 0;
 }
 
 //Statistics
@@ -157,7 +157,7 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and 
 //These funcitons check a single password accoring to the individual levels
 int level1(char pw[102]) //Checks a password at level1
 {
-	if (upCase(pw) == 0 && lowCase(pw) == 0)
+	if (upCase(pw) == 1 && lowCase(pw) == 1)
 	{
 		return 0;
 	}
@@ -165,6 +165,13 @@ int level1(char pw[102]) //Checks a password at level1
 }
 int level2(char pw[102], int arg) //Checks a password at level2 (calls different functions according to the entered argument)
 {
+	int fulfillGroups = 0;
+	fulfillGroups = lowCase(pw) + upCase(pw) + num(pw) + specialChar(pw);
+	if(fulfillGroups >= arg)
+	{
+		return 0;
+	}
+	/*
 	if (arg == 1)
 	{
 		if (lowCase(pw) == 0)
@@ -193,6 +200,7 @@ int level2(char pw[102], int arg) //Checks a password at level2 (calls different
 			return 0;
 		}
 	}
+	*/
 	return 1;
 }
 int level3(char pw[102], int arg) //Checks a password at level3 (checks for x number of reccuring characters)
