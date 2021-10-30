@@ -165,6 +165,10 @@ int level1(char pw[102]) //Checks a password at level1
 }
 int level2(char pw[102], int arg) //Checks a password at level2 (calls different functions according to the entered argument)
 {
+	if(arg > 4)
+	{
+		arg = 4;
+	}
 	int fulfillGroups = 0;
 	fulfillGroups = lowCase(pw) + upCase(pw) + num(pw) + specialChar(pw);
 	if(fulfillGroups >= arg)
