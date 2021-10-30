@@ -121,7 +121,7 @@ int specialChar(char pw[102]) //Checks for at least one special character
 	int i = 0;
 	while (pw[i] != '\n')
 	{
-		if (pw[i] >= 32 && pw[i] <= 126)
+		if ((pw[i] >= 32 && pw[i] <= 47) || (pw[i] >= 58 && pw[i] <= 64) || (pw[i] >= 91 && pw[i] <= 96) || (pw[i] >= 123 && pw[i] <= 126))
 		{
 			return 1;
 		}
