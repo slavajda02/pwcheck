@@ -142,8 +142,8 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and 
 }
 
 //Individual levels
-//These funcitons check a single password accoring to a selected level
-int level1(char pw[102]) //Checks a password at level1
+//These funcitons check a single password according to a selected level
+int level1(char pw[102]) //Checks a password at level1 (upper case and lower case)
 {
 	if (upCase(pw) == 1 && lowCase(pw) == 1)
 	{
@@ -151,7 +151,7 @@ int level1(char pw[102]) //Checks a password at level1
 	}
 	return false;
 }
-int level2(char pw[102], int arg) //Checks a password at level2 (calls different functions according to the entered argument)
+int level2(char pw[102], int arg) //Checks a password at level2 (four groups)
 {
 	if(arg > 4) //Checks with all four groups if the argument is bigger than four
 	{
@@ -193,7 +193,7 @@ int level3(char pw[102], int arg) //Checks a password at level3 (checks for x nu
 	}
 	return false;
 }
-int level4(char password[102], int arg2) //Checks a password at level4 (it looks for a repeated substring int the password)
+int level4(char password[102], int arg2) //Checks a password at level4 (looks for a repeated substring in the password)
 {
 	int repeated = 0;
 	int i = 0; //pointer i 
@@ -240,7 +240,7 @@ int main(int argc, char** argv)
 	double pwCount = 0;
 	double avgLength = 0;
 	int minLength = 100; //sets the minimum length value to the maximum size of a password which is 100 characters long
-	int asciCapture[127] = { 0 }; //Creates an array with a same size as an asci table and fills it with zeros
+	int asciCapture[127] = { 0 }; //Creates an array with same size as an asci table and fills it with zeros
 	int carry = 0; 
 	int diffChar = 0;
 	if (argc == 1) // Prevents running with no arguments
@@ -255,14 +255,14 @@ int main(int argc, char** argv)
 		fprintf(stderr, "Only two arguments and --stats is allowed \n");
 		return false;
 	}
-	if (arg1Check(argv[1]) == false) //Checks for invalid argument values
+	if (arg1Check(argv[1]) == false) //Checks for invalid values of argument1
 	{
 		fprintf(stderr,"ERROR! \n");
 		fprintf(stderr,"The first argument has a bad value! \n");
 		fprintf(stderr,"The first argument should have a value from 1 to 4 \n");
 		return false;
 	}
-	if (arg2Check(argv[2]) == false)
+	if (arg2Check(argv[2]) == false) //Checks for invalid values of argument2
 	{
 		fprintf(stderr,"ERROR!\n");
 		fprintf(stderr,"The second argument must be bigger than 1 and must contain only numerical values \n");
@@ -283,11 +283,12 @@ int main(int argc, char** argv)
 			return false;
 		}
 	}
-	int arg1 = atoi(argv[1]); //Conversion of the first arguments to int
+	int arg1 = atoi(argv[1]); //Conversion of the first argument to int
 	int arg2 = atoi(argv[2]); //Conversion of the second argument to int
+	//fgets loop reading one line at a time from stdin
 	while (fgets(password,102,stdin) != NULL)
 	{
-		if (lengthCheck(password) == false)
+		if (lengthCheck(password) == false) //checks if a password is longer than 100 characters
 		{
 			tooLong();
 			return false;
@@ -321,17 +322,20 @@ int main(int argc, char** argv)
 			}
 		}
 		//stats function
-		for(int i=0 ; password[i] != '\n' ; i++) //Scans every single character
-			{
-				carry = password[i]; //gets the character asci code and saves it into carry
-				asciCapture[carry] = 1; //uses the character asci code as an array pointer and sets that arrays vallue to one
-			}
-		length = length + getCharCount(password); //counts up the lenght of all the passwords
-		if(getCharCount(password)<minLength) //if the current password lenght is smaller than previus minimum lenght it sets the miLenght value to the lenght of the current password
+		if(stats == 1) //condition saves  cpu time if the stats argument has not been entered
 		{
-			minLength = getCharCount(password);
+			for(int i=0 ; password[i] != '\n' ; i++) //Scans every single character
+				{
+					carry = password[i]; //gets the character asci code and saves it into carry
+					asciCapture[carry] = 1; //uses the character asci code as an array pointer and sets that arrays vallue to one
+				}
+			length = length + getCharCount(password); //counts up the lenght of all the passwords
+			if(getCharCount(password)<minLength) //if the current password lenght is smaller than previus minimum lenght it sets the miLenght value to the lenght of the current password
+			{
+				minLength = getCharCount(password);
+			}
+			pwCount ++;
 		}
-		pwCount ++;
 	}
 	//Statistics
 	if(stats == 1)
