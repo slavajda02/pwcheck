@@ -1,11 +1,11 @@
 /*
 pwcheck
 Script for checking an input of passwords and outputing passwords that meet the requirements of a selected level.
-The script has a maximum of 3 parameters. First parameter coresponds to the level, second parameter is used in some levels as a specifier
+The script has a maximum of 3 parameters. First parameter coresponds to the level, 
+second parameter is used in some levels as a specifier
 and a third parameter is an optional one for statistics.
 Example of running the script (./pwcheck 4 3 --stats <<"filewithpasswords".txt)
-Created by:
-Miloslav Kužela
+Created by: Miloslav Kužela
 ID: xkuzel09
 */
 
@@ -236,9 +236,9 @@ int main(int argc, char** argv)
 	char password[102];
 	//Variables for stats
 	int stats = 0; //flag for stats
-	float length = 0;
-	float pwCount = 0;
-	float avgLength = 0;
+	double length = 0;
+	double pwCount = 0;
+	double avgLength = 0;
 	int minLength = 100; //sets the minimum length value to the maximum size of a password which is 100 characters long
 	int asciCapture[127] = { 0 }; //Creates an array with a same size as an asci table and fills it with zeros
 	int carry = 0; 
