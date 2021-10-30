@@ -1,9 +1,9 @@
 /*
 pwcheck
 Program for checking an input of passwords and outputing passwords that meet the requirements of a selected level.
-The script has a maximum of 3 parameters. First parameter coresponds to the level, second parameter is used in some levels
+The script has a maximum of 3 parameters. First parameter coresponds to the level, second parameter is used in some levels as a specifier
 and a third parameter is an optional one for statistics.
-Example of running the script (./pwcheck 4 3 --stats)
+Example of running the script (./pwcheck 4 3 --stats <<"filewithpasswords".txt)
 Created by:
 Miloslav Kužela
 ID: xkuzel09
