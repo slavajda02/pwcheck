@@ -105,7 +105,7 @@ int upCase(char pw[102]) //Checks for at least one upper case character
 }
 int lowCase(char pw[102]) //Checks for at least one lower case character
 {
-	int i = 1;
+	int i = 0;
 	while (pw[i] != '\n')
 	{
 		if (pw[i] >= 'a' && pw[i] <= 'z')
@@ -118,7 +118,7 @@ int lowCase(char pw[102]) //Checks for at least one lower case character
 }
 int specialChar(char pw[102]) //Checks for at least one special character
 {
-	int i = 1;
+	int i = 0;
 	while (pw[i] != '\n')
 	{
 		if (pw[i] >= 32 && pw[i] <= 126)
@@ -341,21 +341,21 @@ int main(int argc, char** argv)
 		}
 		if (arg1 == 2) //Cheks at level2
 		{
-			if (level1(password) == 0 &&level2(password, arg2) == 0)
+			if (level1(password) == 0 && level2(password, arg2) == 0)
 			{
 				printf("%s", password);
 			}
 		}
 		if (arg1 == 3) //Checks at level3
 		{
-			if (level1(password) == 0 && level2(password, 4) == 0 && level3(password, arg2) == 0)
+			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0)
 			{
 				printf("%s", password);
 			}
 		}
 		if (arg1 == 4) //Checks at level4
 		{
-			if (level1(password) == 0 && level2(password, 4) == 0 && level3(password, 4) == 0 && level4(password, arg2) == 0)
+			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0 && level4(password, arg2) == 0)
 			{
 				printf("%s", password);
 			}
