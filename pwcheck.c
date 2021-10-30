@@ -1,3 +1,14 @@
+/*
+pwcheck
+Program for checking an input of passwords and outputing passwords that meet the requirements of a selected level.
+The script has a maximum of 3 parameters. First parameter coresponds to the level, second parameter is used in some levels
+and a third parameter is an optional one for statistics.
+Example of running the script (./pwcheck 4 3 --stats)
+Created by:
+Miloslav Kužela
+ID: xkuzel09
+*/
+
 #include <stdio.h>
 #include<stdlib.h>
 
