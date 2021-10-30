@@ -11,6 +11,7 @@ ID: xkuzel09
 
 #include <stdio.h>
 #include <stdlib.h>
+enum state {true = 0, false = 1};
 
 //Error prevention
 int arg1Check(char* arg1) //Checks the first arguments for correct values
@@ -19,29 +20,29 @@ int arg1Check(char* arg1) //Checks the first arguments for correct values
 	{
 		if(arg1[i] <'1' || arg1[i] > '4') //checks for non numerical character and out of range 1 - 4
 		{
-			return 1;
+			return false;
 		}
 		if(i == 1)
 		{
-			return 1;
+			return false;
 		}
 	}
-	return 0;
+	return true;
 }
 int arg2Check(char* arg2) //Checks the second argument for correct values
 {
 	if(arg2[0] <'1' || arg2[0] > '9') //Checks for non numerical characters and zero
 	{
-		return 1;
+		return false;
 	}
 	for(int i = 0 ; arg2[i] ; i++)
 	{
 		if(arg2[i] <'0' || arg2[i] > '9') //Check for non numerical character
 		{
-			return 1;
+			return false;
 		}
 	}
-	return 0;
+	return true;
 }
 int lengthCheck(char pw[102]) //checks if the password is not longer than 100 characters
 {
@@ -49,16 +50,15 @@ int lengthCheck(char pw[102]) //checks if the password is not longer than 100 ch
 	{
 		if (i > 100) //if the array pointer is about to overflow return 1
 		{
-			return 1;
+			return false;
 		}
 	}
-	return 0;
+	return true;
 }
-int tooLong() //prints out an error for the password lenght
+void tooLong() //prints out an error for the password lenght
 {
 	fprintf(stderr, "ERROR!\n");
 	fprintf(stderr, "Entered password is over 100 characters long!\n");
-	return 0;
 }
 int stringCheck(char* str1, char* str2) //Checks if two entered strings match character to character
 {
@@ -66,10 +66,10 @@ int stringCheck(char* str1, char* str2) //Checks if two entered strings match ch
 	{
 		if(str1[i] == '\0' && str2[i] == '\0') //If both strings end at the same pointer
 		{
-			return 0;
+			return true;
 		}	
 	}
-	return 1;
+	return false;
 }
 
  //Character checking
@@ -147,9 +147,9 @@ int level1(char pw[102]) //Checks a password at level1
 {
 	if (upCase(pw) == 1 && lowCase(pw) == 1)
 	{
-		return 0;
+		return true;
 	}
-	return 1;
+	return false;
 }
 int level2(char pw[102], int arg) //Checks a password at level2 (calls different functions according to the entered argument)
 {
@@ -161,9 +161,9 @@ int level2(char pw[102], int arg) //Checks a password at level2 (calls different
 	fulfillGroups = lowCase(pw) + upCase(pw) + num(pw) + specialChar(pw); //Runs the password through all of the groups then adds them up (functions return '1' on sucess)
 	if(fulfillGroups >= arg) //Checks if the password belongs to required number of groups specified by the argument
 	{
-		return 0;
+		return true;
 	}
-	return 1;
+	return false;
 }
 int level3(char pw[102], int arg) //Checks a password at level3 (checks for x number of reccuring characters)
 {
@@ -189,9 +189,9 @@ int level3(char pw[102], int arg) //Checks a password at level3 (checks for x nu
 	}
 	if (repeatedChar == 0) //returns zero if the string is a valid one
 	{
-		return 0;
+		return true;
 	}
-	return 1;
+	return false;
 }
 int level4(char password[102], int arg2) //Checks a password at level4 (it looks for a repeated substring int the password)
 {
@@ -210,10 +210,10 @@ int level4(char password[102], int arg2) //Checks a password at level4 (it looks
 				carryi++;
 				if (repeated == arg2) //if the number of repeated characters matches the string return 1 which marks the password as a non valid one
 				{
-					return 1;
+					return false;
 				}
 			}
-			repeated = 0; //when the characters on the pointers stop matching and the function wasn't returned, null the repeated counter
+			repeated = true; //when the characters on the pointers stop matching and the function wasn't returned, null the repeated counter
 		}
 		else //if the chracters on the pointers don't match
 		{
@@ -228,7 +228,7 @@ int level4(char password[102], int arg2) //Checks a password at level4 (it looks
 			}
 		}
 	}
-	return 0; //if the repeated == args2 hasn't been trigered return 0 and mark the password as a valid one
+	return true; //if the repeated == args2 hasn't been trigered return 0 and mark the password as a valid one
 }
 
 int main(int argc, char** argv)
@@ -247,26 +247,26 @@ int main(int argc, char** argv)
 	{
 		fprintf(stderr,"ERROR!\n");
 		fprintf(stderr,"No arguments entered!\n");
-		return 1;
+		return false;
 	}
 	if (argc < 3 || argc > 4) //Checks for the number of arguments entered
 	{
 		fprintf(stderr, "ERROR! \n");
 		fprintf(stderr, "Only two arguments and --stats is allowed \n");
-		return 1;
+		return false;
 	}
-	if (arg1Check(argv[1]) == 1) //Checks for invalid argument values
+	if (arg1Check(argv[1]) == false) //Checks for invalid argument values
 	{
 		fprintf(stderr,"ERROR! \n");
 		fprintf(stderr,"The first argument has a bad value! \n");
 		fprintf(stderr,"The first argument should have a value from 1 to 4 \n");
-		return 1;
+		return false;
 	}
-	if (arg2Check(argv[2]) == 1)
+	if (arg2Check(argv[2]) == false)
 	{
 		fprintf(stderr,"ERROR!\n");
 		fprintf(stderr,"The second argument must be bigger than 1 and must contain only numerical values \n");
-		return 1;
+		return false;
 	}
 	if (argc == 4) //checks if the third argument has been entered and checks for its correctness
 	{
@@ -280,42 +280,42 @@ int main(int argc, char** argv)
 			//error message
 			fprintf(stderr,"ERROR!\n");
 			fprintf(stderr,"Stats argument has been wrongly entered use --stats\n");
-			return 1;
+			return false;
 		}
 	}
 	int arg1 = atoi(argv[1]); //Conversion of the first arguments to int
 	int arg2 = atoi(argv[2]); //Conversion of the second argument to int
 	while (fgets(password,102,stdin) != NULL)
 	{
-		if (lengthCheck(password)==1)
+		if (lengthCheck(password) == false)
 		{
 			tooLong();
-			return 1;
+			return false;
 		}
 		if (arg1 == 1) //Checks at level1
 		{
-			if (level1(password) == 0)
+			if (level1(password) == true)
 			{
 				printf("%s",password);
 			}
 		}
 		if (arg1 == 2) //Cheks at level2
 		{
-			if (level1(password) == 0 && level2(password, arg2) == 0)
+			if (level1(password) == true && level2(password, arg2) == true)
 			{
 				printf("%s", password);
 			}
 		}
 		if (arg1 == 3) //Checks at level3
 		{
-			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0)
+			if (level1(password) == true && level2(password, arg2) == true && level3(password, arg2) == true)
 			{
 				printf("%s", password);
 			}
 		}
 		if (arg1 == 4) //Checks at level4
 		{
-			if (level1(password) == 0 && level2(password, arg2) == 0 && level3(password, arg2) == 0 && level4(password, arg2) == 0)
+			if (level1(password) == true && level2(password, arg2) == true && level3(password, arg2) == true && level4(password, arg2) == true)
 			{
 				printf("%s", password);
 			}
@@ -344,5 +344,5 @@ int main(int argc, char** argv)
 		printf("Minimalni delka: %d\n",minLength);
 		printf("Prumerna delka: %.1f\n",avgLength);
 	}
-	return 0;
+	return true;
 }
