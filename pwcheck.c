@@ -10,14 +10,14 @@ ID: xkuzel09
 */
 
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 
 //Error prevention
 int arg1Check(char* arg1) //Checks the first arguments for correct values
 {
 	for(int i = 0 ; arg1[i] != '\0' ; i++)
 	{
-		if(arg1[i] <'1' || arg1[i] > '4')
+		if(arg1[i] <'1' || arg1[i] > '4') //checks for non numerical character and out of range 1 - 4
 		{
 			return 1;
 		}
@@ -30,13 +30,13 @@ int arg1Check(char* arg1) //Checks the first arguments for correct values
 }
 int arg2Check(char* arg2) //Checks the second argument for correct values
 {
-	if(arg2[0] <'1' || arg2[0] > '9')
+	if(arg2[0] <'1' || arg2[0] > '9') //Checks for non numerical characters and zero
 	{
 		return 1;
 	}
 	for(int i = 0 ; arg2[i] ; i++)
 	{
-		if(arg2[i] <'0' || arg2[i] > '9')
+		if(arg2[i] <'0' || arg2[i] > '9') //Check for non numerical character
 		{
 			return 1;
 		}
@@ -45,14 +45,12 @@ int arg2Check(char* arg2) //Checks the second argument for correct values
 }
 int lengthCheck(char pw[102]) //checks if the password is not longer than 100 characters
 {
-	int i = 0;
-	while (pw[i] != '\n') //finding the '\n' character, the character won't be included in the array if there is more than 100 chars
+	for (int i = 0; pw[i] != '\n' ; i++) //finding the '\n' character, the character won't be included in the array if there is more than 100 chars
 	{
 		if (i > 100) //if the array pointer is about to overflow return 1
 		{
 			return 1;
 		}
-		i++;
 	}
 	return 0;
 }
@@ -64,14 +62,12 @@ int tooLong() //prints out an error for the password lenght
 }
 int stringCheck(char* str1, char* str2) //Checks if two entered strings match character to character
 {
-	int i = 0;
-	while(str1[i]==str2[i])
+	for(int i = 0 ; str1[i]==str2[i] ; i++) //If the character on the pointer of the string is same in both strings
 	{
-		if(str1[i] == '\0' && str2[i] == '\0')
+		if(str1[i] == '\0' && str2[i] == '\0') //If both strings end at the same pointer
 		{
 			return 0;
 		}	
-		i++;
 	}
 	return 1;
 }
@@ -79,53 +75,45 @@ int stringCheck(char* str1, char* str2) //Checks if two entered strings match ch
  //Character checking
 int num(char pw[102]) //Checks for at least one numerical character
 {
-	int i = 0;
-	while (pw[i] != '\n')
+	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
-		if (pw[i] >= '0' && pw[i] <= '9')
+		if (pw[i] >= '0' && pw[i] <= '9') //Range of num characters
 		{
 			return 1;
 		}
-		i++;
 	}
 	return 0;
 }
 int upCase(char pw[102]) //Checks for at least one upper case character
 {
-	int i = 0;
-	while (pw[i] != '\n')
+	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
-		if (pw[i] >= 'A' && pw[i] <= 'Z')
+		if (pw[i] >= 'A' && pw[i] <= 'Z') //Range of up case characters
 		{
 			return 1;
 		}
-		i++;
 	}
 	return 0;
 }
 int lowCase(char pw[102]) //Checks for at least one lower case character
 {
-	int i = 0;
-	while (pw[i] != '\n')
+	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
-		if (pw[i] >= 'a' && pw[i] <= 'z')
+		if (pw[i] >= 'a' && pw[i] <= 'z') //Range of lower case characters
 		{
 			return 1;
 		}
-		i++;
 	}
 	return 0;
 }
 int specialChar(char pw[102]) //Checks for at least one special character
 {
-	int i = 0;
-	while (pw[i] != '\n')
+	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
-		if ((pw[i] >= 32 && pw[i] <= 47) || (pw[i] >= 58 && pw[i] <= 64) || (pw[i] >= 91 && pw[i] <= 96) || (pw[i] >= 123 && pw[i] <= 126))
+		if ((pw[i] >= 32 && pw[i] <= 47) || (pw[i] >= 58 && pw[i] <= 64) || (pw[i] >= 91 && pw[i] <= 96) || (pw[i] >= 123 && pw[i] <= 126)) //Range of special characters excluding alphanumerical
 		{
 			return 1;
 		}
-		i++;
 	}
 	return 0;
 }
@@ -165,54 +153,23 @@ int level1(char pw[102]) //Checks a password at level1
 }
 int level2(char pw[102], int arg) //Checks a password at level2 (calls different functions according to the entered argument)
 {
-	if(arg > 4)
+	if(arg > 4) //Checks with all four groups if the argument is bigger than four
 	{
 		arg = 4;
 	}
 	int fulfillGroups = 0;
-	fulfillGroups = lowCase(pw) + upCase(pw) + num(pw) + specialChar(pw);
-	if(fulfillGroups >= arg)
+	fulfillGroups = lowCase(pw) + upCase(pw) + num(pw) + specialChar(pw); //Runs the password through all of the groups then adds them up (functions return '1' on sucess)
+	if(fulfillGroups >= arg) //Checks if the password belongs to required number of groups specified by the argument
 	{
 		return 0;
 	}
-	/*
-	if (arg == 1)
-	{
-		if (lowCase(pw) == 0)
-		{
-			return 0;
-		}
-	}
-	if (arg == 2)
-	{
-		if (upCase(pw) == 0 && lowCase(pw) == 0)
-		{
-			return 0;
-		}
-	}
-	if (arg == 3) 
-	{
-		if (upCase(pw) == 0 && lowCase(pw) == 0 && num(pw) == 0)
-		{
-			return 0;
-		}
-	}
-	if (arg >= 4)
-	{
-		if (upCase(pw) == 0 && lowCase(pw) == 0 && num(pw) == 0 && specialChar(pw) == 0)
-		{
-			return 0;
-		}
-	}
-	*/
 	return 1;
 }
 int level3(char pw[102], int arg) //Checks a password at level3 (checks for x number of reccuring characters)
 {
 	int repeatedChar = 0;
-	int i = 0;
 	int timesRepeated = 0;
-	while (pw[i] != '\n')
+	for (int i = 0 ; pw[i] != '\n' ; i ++)
 	{
 		if (i > 0)
 		{
@@ -229,7 +186,6 @@ int level3(char pw[102], int arg) //Checks a password at level3 (checks for x nu
 		{
 			repeatedChar = 1; 
 		}
-		i++;
 	}
 	if (repeatedChar == 0) //returns zero if the string is a valid one
 	{
