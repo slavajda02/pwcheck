@@ -1,6 +1,6 @@
 /*
 pwcheck
-Program for checking an input of passwords and outputing passwords that meet the requirements of a selected level.
+Script for checking an input of passwords and outputing passwords that meet the requirements of a selected level.
 The script has a maximum of 3 parameters. First parameter coresponds to the level, second parameter is used in some levels as a specifier
 and a third parameter is an optional one for statistics.
 Example of running the script (./pwcheck 4 3 --stats <<"filewithpasswords".txt)
@@ -11,7 +11,7 @@ ID: xkuzel09
 
 #include <stdio.h>
 #include <stdlib.h>
-enum state {true = 0, false = 1};
+enum state {true = 0, false = 1}; //true means 0 and false means 1
 
 //Error prevention
 int arg1Check(char* arg1) //Checks the first arguments for correct values
@@ -142,7 +142,7 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and 
 }
 
 //Individual levels
-//These funcitons check a single password accoring to the individual levels
+//These funcitons check a single password accoring to a selected level
 int level1(char pw[102]) //Checks a password at level1
 {
 	if (upCase(pw) == 1 && lowCase(pw) == 1)
