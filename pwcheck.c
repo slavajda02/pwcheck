@@ -11,6 +11,8 @@ ID: xkuzel09
 
 #include <stdio.h>
 #include <stdlib.h>
+#define asci  127 //Number of characters in an asci table
+#define passwordlenght  102 //Max allowed lenght of a password including /0 and /n
 enum state {true = 0, false = 1}; //true means 0 and false means 1
 
 //Error prevention
@@ -44,7 +46,7 @@ int arg2Check(char* arg2) //Checks the second argument for correct values
 	}
 	return true;
 }
-int lengthCheck(char pw[102]) //checks if the password is not longer than 100 characters
+int lengthCheck(char pw[passwordlenght]) //checks if the password is not longer than 100 characters
 {
 	for (int i = 0; pw[i] != '\n' ; i++) //finding the '\n' character, the character won't be included in the array if there is more than 100 chars
 	{
@@ -73,7 +75,7 @@ int stringCheck(char* str1, char* str2) //Checks if two entered strings match ch
 }
 
  //Character checking
-int num(char pw[102]) //Checks for at least one numerical character
+int num(char pw[passwordlenght]) //Checks for at least one numerical character
 {
 	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
@@ -84,7 +86,7 @@ int num(char pw[102]) //Checks for at least one numerical character
 	}
 	return 0;
 }
-int upCase(char pw[102]) //Checks for at least one upper case character
+int upCase(char pw[passwordlenght]) //Checks for at least one upper case character
 {
 	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
@@ -95,7 +97,7 @@ int upCase(char pw[102]) //Checks for at least one upper case character
 	}
 	return 0;
 }
-int lowCase(char pw[102]) //Checks for at least one lower case character
+int lowCase(char pw[passwordlenght]) //Checks for at least one lower case character
 {
 	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
@@ -106,7 +108,7 @@ int lowCase(char pw[102]) //Checks for at least one lower case character
 	}
 	return 0;
 }
-int specialChar(char pw[102]) //Checks for at least one special character
+int specialChar(char pw[passwordlenght]) //Checks for at least one special character
 {
 	for (int i = 0 ; pw[i] != '\n' ; i++)
 	{
@@ -119,7 +121,7 @@ int specialChar(char pw[102]) //Checks for at least one special character
 }
 
 //Statistics
-int getCharCount(char pw[102]) //Returns a character count for a given array
+int getCharCount(char pw[passwordlenght]) //Returns a character count for a given array
 {
 	int charCount = 0;
 	while (pw[charCount] != '\n')
@@ -128,10 +130,10 @@ int getCharCount(char pw[102]) //Returns a character count for a given array
 	}
 	return charCount;
 }
-int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and returns the number of ones in the array
+int getDifferentChar(int asciCapture[asci]) //Scans the given array for ones and returns the number of ones in the array
 {
 	int diffCharacter = 0;
-	for(int i = 0; i !=127; i++) // 127 is the size of an asci table
+	for(int i = 0; i !=asci; i++)
 	{
 		if(asciCapture[i] == 1)
 		{
@@ -143,7 +145,7 @@ int getDifferentChar(int asciCapture[127]) //Scans the given array for ones and 
 
 //Individual levels
 //These funcitons check a single password according to a selected level
-int level1(char pw[102]) //Checks a password at level1 (upper case and lower case)
+int level1(char pw[passwordlenght]) //Checks a password at level1 (upper case and lower case)
 {
 	if (upCase(pw) == 1 && lowCase(pw) == 1)
 	{
@@ -151,7 +153,7 @@ int level1(char pw[102]) //Checks a password at level1 (upper case and lower cas
 	}
 	return false;
 }
-int level2(char pw[102], int arg) //Checks a password at level2 (four groups)
+int level2(char pw[passwordlenght], int arg) //Checks a password at level2 (four groups)
 {
 	if(arg > 4) //Checks with all four groups if the argument is bigger than four
 	{
@@ -165,7 +167,7 @@ int level2(char pw[102], int arg) //Checks a password at level2 (four groups)
 	}
 	return false;
 }
-int level3(char pw[102], int arg) //Checks a password at level3 (checks for x number of reccuring characters)
+int level3(char pw[passwordlenght], int arg) //Checks a password at level3 (checks for x number of reccuring characters)
 {
 	int repeatedChar = 0;
 	int timesRepeated = 0;
@@ -193,7 +195,7 @@ int level3(char pw[102], int arg) //Checks a password at level3 (checks for x nu
 	}
 	return false;
 }
-int level4(char password[102], int arg2) //Checks a password at level4 (looks for a repeated substring in the password)
+int level4(char password[passwordlenght], int arg2) //Checks a password at level4 (looks for a repeated substring in the password)
 {
 	int repeated = 0;
 	int i = 0; //pointer i 
@@ -231,16 +233,22 @@ int level4(char password[102], int arg2) //Checks a password at level4 (looks fo
 	return true; //if the repeated == args2 hasn't been trigered return 0 and mark the password as a valid one
 }
 
+/*
+Main funtion
+Initializes array for passwords and other variables required for statistics.
+Checks for wrongly entered parameters and runs a loop that reads a standart input and runs functions according to the parameters.
+If specified, prints out statistics then return 0 as sucess.
+*/
 int main(int argc, char** argv)
 {
-	char password[102];
+	char password[passwordlenght];
 	//Variables for stats
 	int stats = 0; //flag for stats
 	double length = 0;
 	double pwCount = 0;
 	double avgLength = 0;
 	int minLength = 100; //sets the minimum length value to the maximum size of a password which is 100 characters long
-	int asciCapture[127] = { 0 }; //Creates an array with same size as an asci table and fills it with zeros
+	int asciCapture[asci] = { 0 }; //Creates an array with same size as an asci table and fills it with zeros
 	int carry = 0; 
 	int diffChar = 0;
 	if (argc == 1) // Prevents running with no arguments
@@ -286,7 +294,7 @@ int main(int argc, char** argv)
 	int arg1 = atoi(argv[1]); //Conversion of the first argument to int
 	int arg2 = atoi(argv[2]); //Conversion of the second argument to int
 	//fgets loop reading one line at a time from stdin
-	while (fgets(password,102,stdin) != NULL)
+	while (fgets(password,passwordlenght,stdin) != NULL)
 	{
 		if (lengthCheck(password) == false) //checks if a password is longer than 100 characters
 		{
